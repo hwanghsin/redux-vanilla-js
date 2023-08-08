@@ -5,11 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="style/index.css" />
     <!-- 一般Redux -->
-    <!-- <script src="https://unpkg.com/redux@latest/dist/redux.min.js"></script> -->
+    <script src="https://unpkg.com/redux@latest/dist/redux.min.js"></script>
     <!-- RTK -->
     <script src="https://unpkg.com/@reduxjs/toolkit@1.9.5/dist/redux-toolkit.umd.js"></script>
-    <script type="module" src="./modules/store.js"></script>
+    <script type="module" src="redux/store.js"></script>
   </head>
-  <body></body>
+  <body>
+    <h3>表單</h3>
+    <form id="form">
+      <input id="usr" placeholder="請輸入帳號" />
+      <input type="password" id="pwd" placeholder="請輸入密碼" />
+      <input type="submit" />
+    </form>
+
+    <h3>開關</h3>
+    <div class="switch-container">
+      <input type="checkbox" id="cb" />
+      <div class="slider"></div>
+      <div class="button" id="cb-btn"></div>
+    </div>
+    <span id="content"></span>
+
+    <script src="script/main.js"></script>
+  </body>
 </html>
