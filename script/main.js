@@ -1,11 +1,15 @@
-window.onload = () => {
-  console.log("store", window.store);
-  console.log("actions", window.actions);
+window.onload = async () => {
   const store = window.store;
   const { updateSwitches, updateForm } = window.actions;
   const switchEl = document.getElementById("cb-btn");
   const usrEl = document.getElementById("usr");
   const pwdEl = document.getElementById("pwd");
+
+  const loadRecords = async () => {
+    const res = await fetch(`https://bible.fhl.net/json/abv.php`);
+    const json = await res.json();
+    return json.record;
+  };
 
   // 開關功能掛載 當dispatch呼叫時此函式會被觸發
   const toggleSwitch = () => {
@@ -54,7 +58,26 @@ window.onload = () => {
 
   document.getElementById("form").addEventListener("submit", (ev) => {
     ev.preventDefault();
-    const formState = store.getState().formState;
-    console.log("formState", formState);
+    const { usr, pwd } = store.getState().formState;
+    document.getElementById(
+      "form-result"
+    ).innerText = `帳號：${usr}, 密碼：${pwd}`;
   });
+
+  try {
+    const records = await loadRecords();
+    const str = records
+      .map(({ book, cname }) => {
+        return `
+        <tr>
+          <td>${book}</td>
+          <td>${cname}</td>
+        </tr>
+      `;
+      })
+      .join("");
+    document.getElementById("table-body").innerHTML = str;
+  } catch (error) {
+    alert(`${error.message}`);
+  }
 };

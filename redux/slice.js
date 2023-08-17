@@ -25,3 +25,15 @@ export const formSlice = window.RTK.createSlice({
     },
   },
 });
+
+export const scriptSlice = window.RTK.createSlice({
+  name: "scriptState",
+  initialState: {
+    records: [],
+  },
+  reducers: {
+    updateRecordList: (state, action) => {
+      state.records = action.payload;
+    },
+  },
+});
