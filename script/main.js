@@ -1,5 +1,6 @@
 window.onload = async () => {
   const store = window.store;
+  const originalRedux = window.originalReduxStore;
   const { updateSwitches, updateForm } = window.actions;
   const switchEl = document.getElementById("cb-btn");
   const usrEl = document.getElementById("usr");
@@ -13,23 +14,32 @@ window.onload = async () => {
 
   // 開關功能掛載 當dispatch呼叫時此函式會被觸發
   const toggleSwitch = () => {
-    const switchState = store.getState().switchState;
+    const switchState = originalRedux.getState();
     document.getElementById("content").innerText = `${switchState.switch}`;
+    // const switchState = store.getState().switchState;
+    // document.getElementById("content").innerText = `${switchState.switch}`;
     document
       .getElementById("cb")
       .setAttribute("checked", `${switchState.switch}`);
   };
   toggleSwitch();
   // dispatch後更新
-  store.subscribe(toggleSwitch);
+  // store.subscribe(toggleSwitch);
+  originalRedux.subscribe(toggleSwitch);
   // 擊點事件
   switchEl.addEventListener("click", () => {
-    const switchState = store.getState().switchState;
-    store.dispatch(
-      updateSwitches({
-        switch: !switchState.switch,
-      })
-    );
+    const switches = originalRedux.getState();
+    console.log("switches", switches);
+    originalRedux.dispatch({
+      type: "UPDATE_SWITCH",
+      payload: { switch: !switches.switch },
+    });
+    // const switchState = store.getState().switchState;
+    // store.dispatch(
+    //   updateSwitches({
+    //     switch: !switchState.switch,
+    //   })
+    // );
   });
 
   const updateUsername = () => {
