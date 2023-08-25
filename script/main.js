@@ -1,7 +1,7 @@
 window.onload = async () => {
   const store = window.store;
   const originalRedux = window.originalReduxStore;
-  const { updateSwitches, updateForm } = window.actions;
+  const { updateSwitches, updateForm, updateRecordList } = window.actions;
   const switchEl = document.getElementById("cb-btn");
   const usrEl = document.getElementById("usr");
   const pwdEl = document.getElementById("pwd");
@@ -74,9 +74,10 @@ window.onload = async () => {
     ).innerText = `帳號：${usr}, 密碼：${pwd}`;
   });
 
-  try {
-    const records = await loadRecords();
-    const str = records
+  document.getElementById("load-scripts").addEventListener("click", () => {
+    const scripts = store.getState().scriptState.records;
+    if (!scripts.length) return;
+    const str = scripts
       .map(({ book, cname }) => {
         return `
         <tr>
@@ -87,6 +88,11 @@ window.onload = async () => {
       })
       .join("");
     document.getElementById("table-body").innerHTML = str;
+  });
+
+  try {
+    const records = await loadRecords();
+    store.dispatch(updateRecordList(records));
   } catch (error) {
     alert(`${error.message}`);
   }
