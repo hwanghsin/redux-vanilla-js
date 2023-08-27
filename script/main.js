@@ -30,11 +30,13 @@ window.onload = async () => {
   switchEl.addEventListener("click", () => {
     const switches = originalRedux.getState();
     console.log("switches", switches);
+    // 傳統切換state的方法
     originalRedux.dispatch({
       type: "UPDATE_SWITCH",
       payload: { switch: !switches.switch },
     });
     // const switchState = store.getState().switchState;
+    // 新版redux直接dispatch定義好的action，不需依賴code去執行。撰寫上比較直覺
     // store.dispatch(
     //   updateSwitches({
     //     switch: !switchState.switch,
