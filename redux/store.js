@@ -11,6 +11,7 @@ window.store = window.RTK.configureStore({
   },
 });
 
+// const { updateForm } = formSlice.actions;
 window.actions = {
   ...formSlice.actions,
   ...switchSlice.actions,
