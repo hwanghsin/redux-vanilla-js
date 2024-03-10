@@ -5,7 +5,7 @@ window.originalReduxStore = window.Redux.createStore(Switches);
 
 window.store = window.RTK.configureStore({
   reducer: {
-    switchState: switchSlice.reducer,
+    switchState: Switches,
     formState: formSlice.reducer,
     scriptState: scriptSlice.reducer,
   },
